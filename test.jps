@@ -1,0 +1,10 @@
+type: install
+id: validation
+name: Validation test JPS
+  
+nodes:
+  - nodeType: nginx
+    count: 10
+        
+onInstall:
+  - install: https://raw.githubusercontent.com/sych74/validator/master/manifest.jps
