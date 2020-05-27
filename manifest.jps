@@ -1,6 +1,7 @@
 type: update
 id: network-validator
 name: DevOps Network Validator
+baseUrl: https://raw.githubusercontent.com/sych74/validator/master
         
 onInstall:
   - script: |
@@ -12,5 +13,6 @@ onInstall:
         nodes.push('node' + n[i].id);
       }
       return { result: 0, nodes: nodes.join(','), nodeIDs: nodeIDs.join(',') }
-  - cmd[${response.nodeIDs}]: bash validator ${response.nodes}
-
+  - cmd[${response.nodeIDs}]: |-
+      wget ${baseUrl}/validator.sh -O /tmp/validator.sh
+      bash /tmp/validator.sh ${response.nodes}
