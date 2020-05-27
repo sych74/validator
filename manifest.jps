@@ -1,0 +1,16 @@
+type: update
+id: network-validator
+name: DevOps Network Validator
+        
+onInstall:
+  - script: |
+      var resp = jelastic.env.control.GetEnvInfo('${env.envName}', session);
+      if (resp.result != 0) return resp;
+      var nodes = [], nodeIDs = [];
+      for (var i = 0, n = resp.nodes; i < n.length; i++) {
+        nodeIDs.push(n[i].id);
+        nodes.push('node' + n[i].id);
+      }
+      return { result: 0, nodes: nodes.join(','), nodeIDs: nodeIDs.join(',') }
+  - cmd[${response.nodeIDs}]: bash validator ${response.nodes}
+
